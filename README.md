@@ -5,6 +5,19 @@ creating keys or passwords. Using Doctrine's `prePersist` callback, StringGenera
 before the entity is persisted. It also checks whether the string is unique to that property (just in case) and quietly
 generates a new string. This results as a minimum of one extra query whenever you flush an entity for the first time.
 
+## Install
+
+Add `"vivait/string-generator-bundle": "dev-master"` to your composer and run `composer update`
+
+Update your `AppKernel`:
+
+    public function registerBundles()
+    {
+        $bundles = array(
+            ...
+            new Vivait\StringGeneratorBundle\VivaitStringGeneratorBundle(),
+    }
+
 ## Basic usage
 
 Add the `@Vivait\StringGenerator()` annotation to an entity property
