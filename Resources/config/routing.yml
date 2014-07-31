@@ -1,0 +1,3 @@
+vivait_friendly_id_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: VivaitStringGeneratorBundle:Default:index }
