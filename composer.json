@@ -1,0 +1,19 @@
+{  
+   "name":"vivait/string-generator-bundle",
+   "description":"Generate random strings for IDs, passwords or keys using property annotations",
+   "authors":[  
+      {  
+         "name":"Robin Cawser",
+         "email":"robin@vivait.co.uk"
+      }
+   ],
+   "require":{  
+
+   },
+   "autoload":{  
+      "psr-0":{  
+         "Vivait\\StringGeneratorBundle":""
+      }
+   },
+   "target-dir":"Vivait/StringGeneratorBundle"
+}
