@@ -26,7 +26,7 @@ class StringGenerator implements StringGeneratorInterface
     {
         $str = [];
         $alphaLength = strlen($this->alphabet) - 1;
-        for ($i = 0; $i < $$this->length; $i++) {
+        for ($i = 0; $i < $this->length; $i++) {
             $n = rand(0, $alphaLength);
             $str[] = $this->alphabet[$n];
         }

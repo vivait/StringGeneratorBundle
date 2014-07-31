@@ -63,7 +63,7 @@ class IdGeneratorListener
             ->setAlphabet($annotation->alphabet)
             ->setLength($annotation->length);
 
-        $id = $$this->generator->generate();
+        $id = $generator->generate();
 
         if ($annotation->prefix) {
             $id = sprintf("%s%s%s", $annotation->prefix, $annotation->separator, $id);
