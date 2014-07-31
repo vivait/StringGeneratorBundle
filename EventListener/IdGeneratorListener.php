@@ -5,6 +5,8 @@ namespace Vivait\StringGeneratorBundle\EventListener;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Vivait\StringGeneratorBundle\Annotation as Vivait;
+use Vivait\StringGeneratorBundle\Generator\StringGenerator;
+use Vivait\StringGeneratorBundle\Model\StringGeneratorInterface;
 
 class IdGeneratorListener
 {
@@ -56,7 +58,12 @@ class IdGeneratorListener
      */
     private function generateId($property, Vivait\StringGenerator $annotation)
     {
-        $id = $this->createId($annotation->alphabet, $annotation->length);
+        $generator = new StringGenerator();
+        $generator
+            ->setAlphabet($annotation->alphabet)
+            ->setLength($annotation->length);
+
+        $id = $$this->generator->generate();
 
         if ($annotation->prefix) {
             $id = sprintf("%s%s%s", $annotation->prefix, $annotation->separator, $id);
@@ -69,20 +76,5 @@ class IdGeneratorListener
         }
     }
 
-    /**
-     * @param $alphabet
-     * @param $length
-     * @return string
-     */
-    private function createId($alphabet, $length)
-    {
-        $id = [];
-        $alphaLength = strlen($alphabet) - 1;
-        for ($i = 0; $i < $length; $i++) {
-            $n = rand(0, $alphaLength);
-            $id[] = $alphabet[$n];
-        }
 
-        return implode($id);
-    }
 } 

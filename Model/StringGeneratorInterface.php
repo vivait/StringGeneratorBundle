@@ -2,12 +2,23 @@
 
 namespace Vivait\StringGeneratorBundle\Model;
 
-interface StringGeneratorInterface {
+interface StringGeneratorInterface
+{
 
     /**
-     * Creates a random string
-     *
+     * @param $alphabet
+     * @return $this
+     */
+    public function setAlphabet($alphabet);
+
+    /**
+     * @param $length
+     * @return $this
+     */
+    public function setLength($length);
+
+    /**
      * @return string
      */
-    public static function generate();
+    public function generate();
 } 
