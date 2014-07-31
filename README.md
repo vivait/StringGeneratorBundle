@@ -7,7 +7,7 @@ generates a new string. This results as a minimum of one extra query whenever yo
 
 ## Install
 
-Add `"vivait/string-generator-bundle": "dev-master"` to your composer and run `composer update`
+Add `"vivait/string-generator-bundle": "dev-master"` to your composer.json and run `composer update`
 
 Update your `AppKernel`:
 
