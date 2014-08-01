@@ -2,8 +2,8 @@
 
 This bundle allows you to automatically generate a unique random string on an entity property, useful for
 creating keys or passwords. Using Doctrine's `prePersist` callback, StringGenerator adds the generated string to a property
-before the entity is persisted. It also checks whether the string is unique to that property (just in case) and quietly
-generates a new string. This results as a minimum of one extra query whenever you flush an entity for the first time.
+before the entity is persisted. It also checks whether the string is unique to that property (just in case) and if not, quietly
+generates a new string.
 
 ## Install
 
