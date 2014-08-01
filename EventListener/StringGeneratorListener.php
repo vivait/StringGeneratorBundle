@@ -5,17 +5,21 @@ namespace Vivait\StringGeneratorBundle\EventListener;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Vivait\StringGeneratorBundle\Annotation as Vivait;
-use Vivait\StringGeneratorBundle\Generator\StringGenerator;
-use Vivait\StringGeneratorBundle\Model\StringGeneratorInterface;
+use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
 
-class IdGeneratorListener
+class StringGeneratorListener
 {
     private $reader;
     private $repo;
+    /**
+     * @var GeneratorInterface
+     */
+    private $generator;
 
-    public function __construct(Reader $reader)
+    public function __construct(Reader $reader, GeneratorInterface $generator)
     {
         $this->reader = $reader;
+        $this->generator = $generator;
     }
 
     /**
@@ -58,22 +62,23 @@ class IdGeneratorListener
      */
     private function generateId($property, Vivait\StringGenerator $annotation)
     {
-        $generator = new StringGenerator();
-        $generator
+        $this->generator
             ->setAlphabet($annotation->alphabet)
             ->setLength($annotation->length);
 
-        $id = $generator->generate();
+        $str = $this->generator->generate();
 
         if ($annotation->prefix) {
-            $id = sprintf("%s%s%s", $annotation->prefix, $annotation->separator, $id);
+            $str = sprintf("%s%s%s", $annotation->prefix, $annotation->separator, $str);
         }
 
-        if ($this->repo->findOneBy([$property => $id])) {
+        if ($this->repo->findOneBy([$property => $str])) {
             $this->generateId($property, $annotation);
         } else {
-            return $id;
+            return $str;
         }
+
+
     }
 
 

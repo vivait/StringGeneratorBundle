@@ -80,8 +80,16 @@ A prefix can be obtained via a callback to a method in the entity using `prefix_
         return $this->category->getCode();
     }
     
-### Custom characters
+### Alphabet
 
 Setting `alphabet` limits the characters the generator can choose from. Defaults to alphanumeric.
 
     @Vivait\StringGenerator(alphabet="abcdefghkmnpqrstuwxyz")
+    
+## Custom generator
+
+If you want to use a different generator to create your string, create a class that implements namespace 
+`Vivait\StringGeneratorBundle\Model\GeneratorInterface`. Add the fully qualified classname to your config.yml:
+
+    vivait_string_generator:
+      generator_class: Acme\BlogBundle\Generator\UsernameGenerator

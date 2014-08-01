@@ -2,7 +2,7 @@
 
 namespace Vivait\StringGeneratorBundle\Model;
 
-interface StringGeneratorInterface
+interface GeneratorInterface
 {
 
     /**
