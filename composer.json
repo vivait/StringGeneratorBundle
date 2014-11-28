@@ -1,6 +1,6 @@
 {  
     "name":"vivait/string-generator-bundle",
-    "description":"Generate random strings for IDs, passwords or keys using property annotations",
+    "description":"Generate random strings for IDs or keys using property annotations",
     "authors":[
       {
          "name":"Robin Cawser",
