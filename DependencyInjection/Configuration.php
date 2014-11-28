@@ -21,8 +21,12 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('vivait_string_generator');
         $rootNode
             ->children()
-                ->scalarNode('generator_class')->defaultValue('Vivait\StringGeneratorBundle\Generator\StringGenerator')->end()
-            ;
+                ->scalarNode('generator_class')
+                    ->cannotBeEmpty()
+                    ->defaultValue('Vivait\StringGeneratorBundle\Generator\StringGenerator')
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }
