@@ -73,7 +73,7 @@ class StringGeneratorListener
         }
 
         if ($this->repo->findOneBy([$property => $str])) {
-            $this->generateId($property, $annotation);
+            return $this->generateId($property, $annotation);
         } else {
             return $str;
         }
