@@ -72,9 +72,9 @@ class StringGeneratorListener
             $str = sprintf("%s%s%s", $annotation->prefix, $annotation->separator, $str);
         }
 
-		if (!$annotation->unique) {
-			return $str;
-		}
+        if (!$annotation->unique) {
+            return $str;
+        }
 
         if ($this->repo->findOneBy([$property => $str])) {
             return $this->generateId($property, $annotation);
