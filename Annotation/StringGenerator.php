@@ -29,6 +29,11 @@ class StringGenerator extends Annotation
     public $length = 8;
 
     /**
+     * @var boolean
+     */
+    public $unique = true;
+
+    /**
      * @var string
      */
     public $separator = "-";
