@@ -4,7 +4,6 @@ namespace Vivait\StringGeneratorBundle\Annotation;
 
 use Doctrine\Common\Annotations\Annotation;
 
-
 /**
  * @Annotation
  *
