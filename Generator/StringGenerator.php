@@ -10,7 +10,6 @@ class StringGenerator implements GeneratorInterface
     private $alphabet;
     private $length;
 
-
     /**
      * Set the characters that can be used to generate the string
      *

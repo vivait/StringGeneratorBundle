@@ -6,13 +6,13 @@ interface GeneratorInterface
 {
 
     /**
-     * @param $alphabet
+     * @param string $alphabet
      * @return $this
      */
     public function setAlphabet($alphabet);
 
     /**
-     * @param $length
+     * @param integer $length
      * @return $this
      */
     public function setLength($length);
@@ -21,4 +21,4 @@ interface GeneratorInterface
      * @return string
      */
     public function generate();
-} 
+}
