@@ -4,7 +4,6 @@ namespace Vivait\StringGeneratorBundle\Annotation;
 
 use Doctrine\Common\Annotations\Annotation;
 
-
 /**
  * @Annotation
  *
@@ -27,6 +26,11 @@ class StringGenerator extends Annotation
      * @var int
      */
     public $length = 8;
+
+    /**
+     * @var boolean
+     */
+    public $unique = true;
 
     /**
      * @var string

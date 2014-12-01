@@ -86,6 +86,12 @@ Setting `alphabet` limits the characters the generator can choose from. Defaults
 
     @Vivait\StringGenerator(alphabet="abcdefghkmnpqrstuwxyz")
     
+### Unique
+
+Setting `unique` is boolean and tell if the string must be unique or not, by default `true`
+
+    @Vivait\StringGenerator(unique="false")
+    
 ## Custom generator
 
 If you want to use a different generator to create your string, create a class that implements namespace 
