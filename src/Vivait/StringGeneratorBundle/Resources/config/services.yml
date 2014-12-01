@@ -1,0 +1,10 @@
+services:
+    vivait_stringgenerator.generator:
+        class: "%vivait_string_generator.generator_class%"
+        public: false
+    vivait_stringgenerator.generator.listener:
+        class: Vivait\StringGeneratorBundle\EventListener\StringGeneratorListener
+        public: false
+        arguments: ["@annotation_reader", "@vivait_stringgenerator.generator"]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

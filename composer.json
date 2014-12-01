@@ -1,0 +1,27 @@
+{  
+    "name":"vivait/string-generator-bundle",
+    "description":"Generate random strings for IDs or keys using property annotations",
+    "authors":[
+      {
+         "name":"Robin Cawser",
+         "email":"robin@vivait.co.uk"
+      }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/common": "~2.2"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload":{
+      "psr-0":{
+         "Vivait\\StringGeneratorBundle":"src/"
+      }
+    }
+}
