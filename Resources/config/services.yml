@@ -1,9 +1,12 @@
+parameters:
+    vivait_stringgenerator.generator.listener.class: Vivait\StringGeneratorBundle\EventListener\StringGeneratorListener
+
 services:
     vivait_stringgenerator.generator:
         class: "%vivait_string_generator.generator_class%"
         public: false
     vivait_stringgenerator.generator.listener:
-        class: Vivait\StringGeneratorBundle\EventListener\StringGeneratorListener
+        class: "%vivait_stringgenerator.generator.listener.class%"
         public: false
         arguments: ["@annotation_reader", "@vivait_stringgenerator.generator"]
         tags:
