@@ -10,24 +10,19 @@ class StringGenerator implements GeneratorInterface
     /**
      * @var
      */
-    private $length;
+    private $length = 8;
 
     /**
      * @var string
      */
-    private $chars;
-
-    public function __construct()
-    {
-        $this->chars = 'abcdefjhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ12345567890';
-    }
+    private $chars = 'abcdefjhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ12345567890';
 
     /**
      * @param string $chars
      */
     public function setChars($chars)
     {
-        if(!$chars){
+        if(!is_string($chars) || $chars === ''){
             throw new \OutOfBoundsException('$chars cannot be empty');
         }
 
@@ -41,6 +36,10 @@ class StringGenerator implements GeneratorInterface
      */
     public function setLength($length)
     {
+        if ($length < 1) {
+            throw new \OutOfBoundsException('Length must be greater than 0');
+        }
+
         $this->length = $length;
         return $this;
     }
