@@ -7,7 +7,10 @@
          "email":"robin@vivait.co.uk"
       }
     ],
-    "require":{},
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/common": "~2.2"
+    },
     "require-dev": {
         "phpspec/phpspec": "~2.0"
     },
