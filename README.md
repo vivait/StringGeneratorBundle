@@ -7,95 +7,114 @@ generates a new string.
 
 ## Install
 
-Add `"vivait/string-generator-bundle": "dev-master"` to your composer.json and run `composer update`
+Add `"vivait/string-generator-bundle": "~1.0"` to your composer.json and run `composer update`
 
 Update your `AppKernel`:
+```php
+public function registerBundles()
+{
+    $bundles = array(
+        ...
+        new Vivait\StringGeneratorBundle\VivaitStringGeneratorBundle(),
+}
+```  
+## Configure
 
-    public function registerBundles()
-    {
-        $bundles = array(
-            ...
-            new Vivait\StringGeneratorBundle\VivaitStringGeneratorBundle(),
-    }
+The default configuration is shown below:
+  
+```yaml
+vivait_string_generator:
+  generators:
+    string: vivait_generator.generator.string
+    secure_bytes: vivait_generator.generator.secure_bytes
+```
+### Bundled generators
+* `StringGenerator` generates a random string based on a pool or characters
+* `SecureBytesGenerator` generates a secure random string using the `Symfony\Component\Security\Core\Util\SecureRandom` class
+
+### Custom generators
+You can use your own generators by implementing `GeneratorInterface` and defining the generator in the configuration, 
+using either its service or classname.
 
 ## Basic usage
 
-Add the `@Vivait\StringGenerator()` annotation to an entity property
+Add the `@Generate(generator="generator_name")` annotation to an entity property 
+(where `generator_name` is the name of a generator defined in the configuration).
 
-    use Vivait\StringGeneratorBundle\Annotation as Vivait;
-    
+```php
+use Vivait\StringGeneratorBundle\Annotation\GeneratorAnnotation as Generate;
+
+/**
+ * Api
+ *
+ * @ORM\Table()
+ * @ORM\Entity()
+ */
+class Api
+{
     /**
-     * Api
+     * @var integer
      *
-     * @ORM\Table()
-     * @ORM\Entity()
+     * @ORM\Column(name="id", type="guid")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="UUID")
      */
-    class Api
-    {
-        /**
-         * @var integer
-         *
-         * @ORM\Column(name="id", type="guid")
-         * @ORM\Id
-         * @ORM\GeneratedValue(strategy="UUID")
-         */
-        private $id;
-    
-        /**
-         * @var string
-         *
-         * @ORM\Column(name="api_id", type="string", nullable=false)
-         * @Vivait\StringGenerator()
-         */
-        private $api_key;
-
-## Options
-
-### Length
-
-To change the length of the generated string, add `length` to the annotation. The default is 8. Length specifies the length
-of the resulting generated string, and does not include the prefix or separator
-
-    @Vivait\StringGenerator(length=4)
-    
-### Prefix the key
-
-To prefix the string, add the `prefix` option to the annotation. The default seperator between the prefix and generated
-string is a `-`, but this can be changed using `separator`:
-
-    @Vivait\StringGenerator(prefix="user", separator="_")
-
-A prefix can be obtained via a callback to a method in the entity using `prefix_callback`, which overrides `prefix`.
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="friendly_id", type="string", nullable=false)
-     * @Vivait\StringGenerator(prefix_callback="createPrefix", length=8)
+     * @ORM\Column(name="api_id", type="string", nullable=false)
+     * @Generate(generator="string")
      */
-    private $friendly_id;
-    
-    public function createPrefix()
-    {
-        return $this->category->getCode();
-    }
-    
-### Alphabet
+    private $api_key;
+```
+## Options
 
-Setting `alphabet` limits the characters the generator can choose from. Defaults to alphanumeric.
+### Length
 
-    @Vivait\StringGenerator(alphabet="abcdefghkmnpqrstuwxyz")
+To change the length of the generated string, add `length` to the annotation.
+```php
+@Generate(length=4)
+```  
+
+### Callbacks
+    
+It's possible to define callbacks on the `Generator` class that you are using. 
+For example, with the bundled StringGenerator, you may wish to set the character pool. 
+
+This can be achieved by setting the `callbacks` option. For example:
+
+```php
+@Generate(generator="string", callbacks={"setChars"="ABCDEFG"})
+```
+
+Here, `setChars()` is called in the `StringGenerator` class, passing `ABCDEFG` as a parameter.
+
+It's even possible to set a callback value dynamically:
+
+```php
+/**
+ * @var string
+ *
+ * @ORM\Column(name="short_id", type="string", length=255, nullable=false)
+ * @Generate(generator="string", length=5, callbacks={"setPrefix"="getPrefix"})
+ */
+private $short_id;
+
+public function getPrefix()
+{
+    return $this->getType(); //"default"
+}
+```
+
+In this case `StringGenerator::setPrefix("default")` will be called
+
     
 ### Unique
 
 Setting `unique` is boolean and tell if the string must be unique or not, by default `true`
 
-    @Vivait\StringGenerator(unique="false")
-    
-## Custom generator
-
-If you want to use a different generator to create your string, create a class that implements namespace 
-`Vivait\StringGeneratorBundle\Model\GeneratorInterface`. Add the fully qualified classname to your config.yml:
-
-    vivait_string_generator:
-      generator_class: Acme\BlogBundle\Generator\UsernameGenerator
+```php
+@Generate(generator="secure_bytes", unique=false)
+```
