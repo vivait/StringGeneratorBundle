@@ -10,8 +10,13 @@ use Doctrine\Common\Annotations\Annotation;
  * Class StringGenerator
  * @package Vivait\StringGeneratorBundle\Annotation
  */
-class StringGenerator extends Annotation
+class GeneratorAnnotation extends Annotation
 {
+    /**
+     * @var
+     */
+    public $generator;
+
     /**
      * @var string
      */

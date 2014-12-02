@@ -4,10 +4,11 @@ namespace Vivait\StringGeneratorBundle\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Vivait\StringGeneratorBundle\Annotation as Vivait;
+use Vivait\StringGeneratorBundle\Annotation\GeneratorAnnotation;
 use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
+use Vivait\StringGeneratorBundle\Registry\Registry;
 
-class StringGeneratorListener
+class GeneratorListener
 {
     private $reader;
     private $repo;
@@ -15,11 +16,19 @@ class StringGeneratorListener
      * @var GeneratorInterface
      */
     private $generator;
+    /**
+     * @var Registry
+     */
+    private $registry;
 
-    public function __construct(Reader $reader, GeneratorInterface $generator)
+    /**
+     * @param Reader $reader
+     * @param Registry $registry
+     */
+    public function __construct(Reader $reader, Registry $registry)
     {
         $this->reader = $reader;
-        $this->generator = $generator;
+        $this->registry = $registry;
     }
 
     /**
@@ -39,13 +48,13 @@ class StringGeneratorListener
             //Loop through the property's annotations
             foreach ($this->reader->getPropertyAnnotations($property) as $annotation) {
 
-                if ($annotation instanceof Vivait\StringGenerator) {
+                if ($annotation instanceof GeneratorAnnotation) {
                     if (method_exists($entity, $annotation->prefix_callback) && is_callable([$entity, $annotation->prefix_callback])) {
                         $callback = $annotation->prefix_callback;
                         $annotation->prefix = $entity->$callback();
                     }
 
-                    $id = $this->generateId(
+                    $id = $this->generateString(
                         $property->name,
                         $annotation
                     );
@@ -60,10 +69,10 @@ class StringGeneratorListener
      * @param $annotation
      * @return string
      */
-    private function generateId($property, Vivait\StringGenerator $annotation)
+    private function generateString($property, GeneratorAnnotation $annotation)
     {
-        $this->generator
-            ->setLength($annotation->length);
+        $generator = $this->registry->get($annotation->generator);
+        $generator->setLength($annotation->length);
 
         $str = $this->generator->generate();
 
@@ -75,8 +84,9 @@ class StringGeneratorListener
             return $str;
         }
 
+
         if ($this->repo->findOneBy([$property => $str])) {
-            return $this->generateId($property, $annotation);
+            return $this->generateString($property, $annotation);
         } else {
             return $str;
         }
