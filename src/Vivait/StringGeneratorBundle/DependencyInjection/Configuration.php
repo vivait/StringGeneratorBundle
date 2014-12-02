@@ -19,16 +19,17 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('vivait_string_generator');
+
         $rootNode
-            ->fixXmlConfig('notifier')
+            ->fixXmlConfig('generator')
             ->children()
                 ->arrayNode('generators')
                     ->useAttributeAsKey('class')
-                    ->prototype('scalar')
-                    ->cannotBeEmpty()
+                    ->prototype('scalar')->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
+
+
 
         return $treeBuilder;
     }

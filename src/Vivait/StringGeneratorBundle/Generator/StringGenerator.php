@@ -16,6 +16,7 @@ class StringGenerator implements GeneratorInterface
      * @var string
      */
     private $chars = 'abcdefjhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ12345567890';
+    private $prefix = '';
 
     /**
      * @param string $chars
@@ -44,6 +45,11 @@ class StringGenerator implements GeneratorInterface
         return $this;
     }
 
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
     /**
      * Creates a random string based on a length and alphabet
      *
@@ -58,6 +64,6 @@ class StringGenerator implements GeneratorInterface
             $str[] = $this->chars[$n];
         }
 
-        return implode($str);
+        return $this->prefix . implode($str);
     }
 }

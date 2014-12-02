@@ -12,15 +12,11 @@ use Doctrine\Common\Annotations\Annotation;
  */
 class GeneratorAnnotation extends Annotation
 {
+    public $callbacks = [];
     /**
      * @var
      */
     public $generator;
-
-    /**
-     * @var string
-     */
-    public $prefix;
 
     /**
      * @var int
@@ -31,14 +27,4 @@ class GeneratorAnnotation extends Annotation
      * @var boolean
      */
     public $unique = true;
-
-    /**
-     * @var string
-     */
-    public $separator = "-";
-
-    /**
-     * @var string
-     */
-    public $prefix_callback;
 }
