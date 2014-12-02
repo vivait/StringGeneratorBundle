@@ -5,13 +5,13 @@ namespace Vivait\StringGeneratorBundle\Generator;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
 
-class PasswordGenerator implements GeneratorInterface
+class SecureBytesGenerator implements GeneratorInterface
 {
     /**
      * @var SecureRandom
      */
     private $secureRandom;
-    private $length;
+    private $length = 8;
 
     /**
      * @param SecureRandom $secureRandom

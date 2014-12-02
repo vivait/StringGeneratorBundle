@@ -20,10 +20,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('vivait_string_generator');
         $rootNode
+            ->fixXmlConfig('notifier')
             ->children()
-                ->scalarNode('generator_class')
+                ->arrayNode('generators')
+                    ->useAttributeAsKey('class')
+                    ->prototype('scalar')
                     ->cannotBeEmpty()
-                    ->defaultValue('Vivait\StringGeneratorBundle\Generator\StringGenerator')
                 ->end()
             ->end()
         ;
