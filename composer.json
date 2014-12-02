@@ -7,9 +7,12 @@
          "email":"robin@vivait.co.uk"
       }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": ">=5.3.3",
-        "doctrine/common": "~2.2"
+        "doctrine/common": "~2.2",
+        "symfony/security": "~2.1"
     },
     "require-dev": {
         "phpspec/phpspec": "~2.0"
@@ -19,8 +22,7 @@
     },
     "autoload":{
       "psr-0":{
-         "Vivait\\StringGeneratorBundle":""
+         "Vivait\\StringGeneratorBundle\\": "src/"
       }
-    },
-    "target-dir":"Vivait/StringGeneratorBundle"
+    }
 }
