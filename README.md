@@ -21,7 +21,7 @@ public function registerBundles()
 ## Configure
 
 The default configuration is shown below:
-  
+
 ```yaml
 vivait_string_generator:
   generators:
@@ -33,13 +33,15 @@ vivait_string_generator:
 * `SecureBytesGenerator` generates a secure random string using the `Symfony\Component\Security\Core\Util\SecureRandom` class
 
 ### Custom generators
-You can use your own generators by implementing `GeneratorInterface` and defining the generator in the configuration, 
+You can use your own generators by implementing `GeneratorInterface` and defining the generator in the configuration,
 using either its service or classname.
 
 ## Basic usage
 
-Add the `@Generate(generator="generator_name")` annotation to an entity property 
+Add the `@Generate(generator="generator_name")` annotation to an entity property
 (where `generator_name` is the name of a generator defined in the configuration).
+
+`generator` is a required property of the annotation.
 
 ```php
 use Vivait\StringGeneratorBundle\Annotation\GeneratorAnnotation as Generate;
@@ -79,9 +81,9 @@ To change the length of the generated string, add `length` to the annotation.
 ```  
 
 ### Callbacks
-    
-It's possible to define callbacks on the `Generator` class that you are using. 
-For example, with the bundled StringGenerator, you may wish to set the character pool. 
+
+It's possible to define callbacks on the `Generator` class that you are using.
+For example, with the bundled StringGenerator, you may wish to set the character pool.
 
 This can be achieved by setting the `callbacks` option. For example:
 
@@ -110,11 +112,20 @@ public function getPrefix()
 
 In this case `StringGenerator::setPrefix("default")` will be called
 
-    
+
 ### Unique
 
 Setting `unique` is boolean and tell if the string must be unique or not, by default `true`
 
 ```php
 @Generate(generator="secure_bytes", unique=false)
+```
+
+### Override
+
+By default, `override` is set to true, so a string is always generated for a property.
+However, by setting `override` to false, only null properties will have a string generated for them.
+
+```php
+@Generate(generator="string", override=false)
 ```
