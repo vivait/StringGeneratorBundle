@@ -17,17 +17,20 @@ use Vivait\StringGeneratorBundle\Registry\Registry;
 
 class GeneratorListenerSpec extends ObjectBehavior
 {
+    public $mockEntity;
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Vivait\StringGeneratorBundle\EventListener\GeneratorListener');
     }
 
-    function let(Reader $reader, Registry $registry, Entity $mockEntity, EntityRepository $entityRepository, ClassMetadata $meta, EntityManagerInterface $entityManager, LifecycleEventArgs $args)
+    function let(Reader $reader, Registry $registry, EntityRepository $entityRepository, ClassMetadata $meta, EntityManagerInterface $entityManager, LifecycleEventArgs $args)
     {
         $this->beConstructedWith($reader, $registry);
 
         //Set up for EM etc.
-        $args->getEntity()->willReturn($mockEntity);
+        $this->mockEntity = new Entity();
+        $args->getEntity()->willReturn($this->mockEntity);
         $args->getEntityManager()->willReturn($entityManager);
         $entityManager->getClassMetadata(Argument::any())->willReturn($meta);
         $entityManager->getRepository(Argument::any())->willReturn($entityRepository);
@@ -35,36 +38,49 @@ class GeneratorListenerSpec extends ObjectBehavior
 
     }
 
-    function it_performs_callbacks_on_the_generator(StringGenerator $generator, Entity $mockEntity)
+    function it_performs_callbacks_on_the_generator(StringGenerator $generator)
     {
         $annotation = new GeneratorAnnotation([]);
         $annotation->callbacks = ['setChars' => 'abcdef'];
-        $this->shouldNotThrow('\InvalidArgumentException')->duringPerformCallbacks($generator, $annotation, $mockEntity);
+        $this->shouldNotThrow('\InvalidArgumentException')->duringPerformCallbacks($generator, $annotation, $this->mockEntity);
 
         $annotation->callbacks = ['noMethod' => 'something'];
-        $this->shouldThrow('\InvalidArgumentException')->duringPerformCallbacks($generator, $annotation, $mockEntity);
+        $this->shouldThrow('\InvalidArgumentException')->duringPerformCallbacks($generator, $annotation, $this->mockEntity);
     }
 
-    function it_can_get_callback_values_from_annotated_object(StringGenerator $generator, Entity $mockEntity)
+    function it_can_get_callback_values_from_annotated_object(StringGenerator $generator)
     {
         $annotation = new GeneratorAnnotation([]);
-        $annotation->callbacks = ['setPrefix' => 'getPrefix'];
+        $annotation->callbacks = ['setPrefix' => 'createPrefix'];
 
-        $mockEntity->getPrefix()->willReturn('VIVA_');
+        $this->mockEntity->createPrefix();
         $generator->setPrefix('VIVA_')->shouldBeCalled();
-        $this->performCallbacks($generator, $annotation, $mockEntity);
+        $this->performCallbacks($generator, $annotation, $this->mockEntity);
     }
 
-    function it_sets_only_null_properties_if_specified(Reader $reader, LifecycleEventArgs $args, StringGenerator $generator, Entity $mockEntity)
+    function it_sets_null_properties_if_override_set_to_true(Registry $registry, Reader $reader, LifecycleEventArgs $args, StringGenerator $generator)
     {
-        $mockEntity->setName(null);
-
         $annotation = new GeneratorAnnotation([]);
-        $annotation->nullOnly = true;
+        $annotation->override = false;
+        $annotation->unique = false;
 
         $reader->getPropertyAnnotations(Argument::any())->willReturn([$annotation]);
 
+        $registry->get(Argument::any())->willReturn($generator)->shouldBeCalled();
+        $generator->generate()->shouldBeCalled();
+        $generator->setLength(Argument::any())->shouldBeCalled();
+
+        $this->prePersist($args);
+    }
+    function it_wont_set_non_null_properties_if_override_set_to_true(Reader $reader, LifecycleEventArgs $args, StringGenerator $generator)
+    {
+        $this->mockEntity->setName('Robin');
+        $annotation = new GeneratorAnnotation([]);
+        $annotation->override = false;
+
+        $reader->getPropertyAnnotations(Argument::any())->willReturn([$annotation]);
         $generator->generate()->shouldNotBeCalled();
+
         $this->prePersist($args);
     }
 
@@ -75,10 +91,8 @@ class GeneratorListenerSpec extends ObjectBehavior
         $reader->getPropertyAnnotations(Argument::any())->willReturn([$annotation]);
 
         $registry->get(Argument::any())->willReturn($generator);
-
         $generator->generate()->shouldBeCalled();
         $generator->setLength(Argument::any())->shouldBeCalled();
-
 
         $this->prePersist($args);
     }
@@ -88,14 +102,15 @@ class Entity
 {
     private $name;
 
-    public function getPrefix()
+    public function createPrefix()
     {
-
+        return 'VIVA_';
     }
 
     public function setName($name)
     {
         $this->name = $name;
     }
+
 }
 

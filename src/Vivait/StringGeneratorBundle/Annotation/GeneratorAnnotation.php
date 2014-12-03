@@ -28,5 +28,5 @@ class GeneratorAnnotation extends Annotation
      */
     public $unique = true;
 
-    public $nullOnly = false;
+    public $override = true;
 }

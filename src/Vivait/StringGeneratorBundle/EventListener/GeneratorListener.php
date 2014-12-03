@@ -55,7 +55,7 @@ class GeneratorListener
                 if ($annotation instanceof GeneratorAnnotation) {
 
                     $property->setAccessible(true);
-                    if ($annotation->nullOnly && !$property->getValue($object)) {
+                    if (!$annotation->override && $property->getValue($entity)) {
                         break;
                     }
 
