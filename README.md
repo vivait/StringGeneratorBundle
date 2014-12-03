@@ -1,5 +1,7 @@
 # StringGeneratorBundle
 
+[![Build Status](https://scrutinizer-ci.com/g/vivait/StringGeneratorBundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/vivait/StringGeneratorBundle/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vivait/StringGeneratorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/vivait/StringGeneratorBundle/?branch=master)
+
 This bundle allows you to automatically generate a unique random string on an entity property, useful for
 creating keys. Using Doctrine's `prePersist` callback, StringGenerator adds the generated string to a property
 before the entity is persisted. It also checks whether the string is unique to that property (just in case) and if not, quietly
