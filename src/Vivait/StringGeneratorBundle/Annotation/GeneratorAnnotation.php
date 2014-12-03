@@ -27,4 +27,6 @@ class GeneratorAnnotation extends Annotation
      * @var boolean
      */
     public $unique = true;
+
+    public $nullOnly = false;
 }
