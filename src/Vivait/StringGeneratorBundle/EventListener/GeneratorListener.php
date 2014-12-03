@@ -3,6 +3,7 @@
 namespace Vivait\StringGeneratorBundle\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Vivait\StringGeneratorBundle\Annotation\GeneratorAnnotation;
 use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
@@ -10,7 +11,13 @@ use Vivait\StringGeneratorBundle\Registry\Registry;
 
 class GeneratorListener
 {
+    /**
+     * @var Reader
+     */
     private $reader;
+    /**
+     * @var EntityRepository
+     */
     private $repo;
     /**
      * @var GeneratorInterface
@@ -45,11 +52,15 @@ class GeneratorListener
 
         foreach ($object->getProperties() as $property) {
             foreach ($this->reader->getPropertyAnnotations($property) as $annotation) {
-
                 if ($annotation instanceof GeneratorAnnotation) {
-                    $string = $this->generateString($property->name, $annotation, $object);
 
-                    $meta->getReflectionProperty($property->name)->setValue($entity, $string);
+                    $property->setAccessible(true);
+                    if (!$annotation->override && $property->getValue($entity)) {
+                        break;
+                    }
+
+                    $string = $this->generateString($property->name, $annotation, $object);
+                    $property->setValue($entity, $string);
                 }
             }
         }
@@ -77,13 +88,11 @@ class GeneratorListener
             return $str;
         }
 
-
         if ($this->repo->findOneBy([$property => $str])) {
             return $this->generateString($property, $annotation, $object);
         } else {
             return $str;
         }
-
     }
 
     /**

@@ -12,6 +12,7 @@
     "require": {
         "php": ">=5.3.3",
         "doctrine/common": "~2.2",
+        "doctrine/orm": "~2.2",
         "symfony/security": "~2.1"
     },
     "require-dev": {
