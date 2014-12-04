@@ -1,5 +1,6 @@
 {  
     "name":"vivait/string-generator-bundle",
+    "license": "MIT",
     "description":"Generate random strings for IDs or keys using property annotations",
     "authors":[
       {
