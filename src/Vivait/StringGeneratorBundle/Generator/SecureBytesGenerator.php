@@ -2,10 +2,11 @@
 
 namespace Vivait\StringGeneratorBundle\Generator;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Util\SecureRandom;
-use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
+use Vivait\StringGeneratorBundle\Model\ConfigurableGeneratorInterface;
 
-class SecureBytesGenerator implements GeneratorInterface
+class SecureBytesGenerator implements ConfigurableGeneratorInterface
 {
     /**
      * @var SecureRandom
@@ -28,7 +29,6 @@ class SecureBytesGenerator implements GeneratorInterface
     public function setLength($length)
     {
         $this->length = $length;
-        return $this;
     }
 
     /**
@@ -40,10 +40,22 @@ class SecureBytesGenerator implements GeneratorInterface
     }
 
     /**
+     * @param OptionsResolver $resolver
+     * @return mixed
+     */
+    public function getDefaultOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'length' => $this->length,
+            ]);
+    }
+
+    /**
      * @param array $options
+     * @return mixed
      */
     public function setOptions(array $options)
     {
-        // TODO: Implement setOptions() method.
+        $this->length = $options['length'];
     }
 }

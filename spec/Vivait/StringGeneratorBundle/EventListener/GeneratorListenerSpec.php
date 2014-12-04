@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vivait\StringGeneratorBundle\Annotation\GeneratorAnnotation;
 use Vivait\StringGeneratorBundle\Generator\StringGenerator;
 use Vivait\StringGeneratorBundle\Model\ConfigurableGeneratorInterface;
+use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
 use Vivait\StringGeneratorBundle\Registry\Registry;
 
 class GeneratorListenerSpec extends ObjectBehavior
@@ -60,7 +61,7 @@ class GeneratorListenerSpec extends ObjectBehavior
         $this->performCallbacks($generator, $annotation, $this->mockEntity);
     }
 
-    function it_sets_null_properties_if_override_set_to_true(Registry $registry, Reader $reader, LifecycleEventArgs $args, StringGenerator $generator)
+    function it_sets_null_properties_if_override_set_to_true(Registry $registry, Reader $reader, LifecycleEventArgs $args, GeneratorInterface $generator)
     {
         $annotation = new GeneratorAnnotation([]);
         $annotation->override = false;
@@ -74,7 +75,7 @@ class GeneratorListenerSpec extends ObjectBehavior
 
         $this->prePersist($args);
     }
-    function it_wont_set_non_null_properties_if_override_set_to_true(Reader $reader, LifecycleEventArgs $args, StringGenerator $generator)
+    function it_wont_set_non_null_properties_if_override_set_to_true(Reader $reader, LifecycleEventArgs $args, GeneratorInterface $generator)
     {
         $this->mockEntity->setName('Robin');
         $annotation = new GeneratorAnnotation([]);
@@ -86,7 +87,7 @@ class GeneratorListenerSpec extends ObjectBehavior
         $this->prePersist($args);
     }
 
-    function it_generates_a_string_on_a_property(Registry $registry, Reader $reader, LifecycleEventArgs $args, StringGenerator $generator)
+    function it_generates_a_string_on_a_property(Registry $registry, Reader $reader, LifecycleEventArgs $args, GeneratorInterface $generator)
     {
         $annotation = new GeneratorAnnotation([]);
 

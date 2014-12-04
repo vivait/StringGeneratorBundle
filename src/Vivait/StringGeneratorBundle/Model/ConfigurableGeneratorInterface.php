@@ -10,7 +10,7 @@ interface ConfigurableGeneratorInterface extends GeneratorInterface
      * @param array $options
      * @return mixed
      */
-    public function setOptions(array $options = []);
+    public function setOptions(array $options);
 
     /**
      * @param OptionsResolver $resolver

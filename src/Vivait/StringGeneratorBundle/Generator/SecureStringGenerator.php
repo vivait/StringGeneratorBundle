@@ -63,7 +63,7 @@ class SecureStringGenerator implements ConfigurableGeneratorInterface
         }
     }
 
-    public function setOptions(array $options = [])
+    public function setOptions(array $options)
     {
         $this->generator = $this->getGenerator($options['strength']);
         $this->length = $options['length'];
