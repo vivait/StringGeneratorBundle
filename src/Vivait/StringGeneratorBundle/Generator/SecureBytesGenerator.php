@@ -38,4 +38,12 @@ class SecureBytesGenerator implements GeneratorInterface
     {
         return $this->secureRandom->nextBytes($this->length);
     }
+
+    /**
+     * @param array $options
+     */
+    public function setOptions(array $options)
+    {
+        // TODO: Implement setOptions() method.
+    }
 }
