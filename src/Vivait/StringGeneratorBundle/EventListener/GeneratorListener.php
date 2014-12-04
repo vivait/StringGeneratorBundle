@@ -5,6 +5,7 @@ namespace Vivait\StringGeneratorBundle\EventListener;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Vivait\StringGeneratorBundle\Annotation\GeneratorAnnotation;
 use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
 use Vivait\StringGeneratorBundle\Registry\Registry;
@@ -23,19 +24,30 @@ class GeneratorListener
      * @var GeneratorInterface
      */
     private $generator;
+
     /**
      * @var Registry
      */
     private $registry;
 
+    private $container;
+
     /**
+     * Registry has been made nullable as injecting it causes circular references. Instead, the container is injected
+     * via a setter, and the registry is fetched from there instead.
+     *
      * @param Reader $reader
      * @param Registry $registry
      */
-    public function __construct(Reader $reader, Registry $registry)
+    public function __construct(Reader $reader, Registry $registry = null)
     {
         $this->reader = $reader;
         $this->registry = $registry;
+    }
+
+    public function setContainer(ContainerInterface $container)
+    {
+        $this->container = $container;
     }
 
     /**
@@ -75,7 +87,7 @@ class GeneratorListener
     private function generateString($property, GeneratorAnnotation $annotation, $object)
     {
         /** @var GeneratorInterface $generator */
-        $generator = $this->registry->get($annotation->generator);
+        $generator = $this->getRegistry()->get($annotation->generator);
         $generator->setLength($annotation->length);
 
         if(!empty($annotation->callbacks)){
@@ -128,5 +140,16 @@ class GeneratorListener
     private function isMethod($class, $callback)
     {
         return method_exists($class, $callback) && is_callable([$class, $callback]);
+    }
+
+    /**
+     * @return Registry
+     */
+    private function getRegistry()
+    {
+        if($this->registry){
+            return $this->registry;
+        }
+        return $this->container->get('vivait_generator.registry');
     }
 }
