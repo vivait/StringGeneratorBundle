@@ -28,6 +28,7 @@ class SecureBytesGenerator implements GeneratorInterface
     public function setLength($length)
     {
         $this->length = $length;
+        return $this;
     }
 
     /**

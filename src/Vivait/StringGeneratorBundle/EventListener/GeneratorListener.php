@@ -20,16 +20,15 @@ class GeneratorListener
      * @var EntityRepository
      */
     private $repo;
-    /**
-     * @var GeneratorInterface
-     */
-    private $generator;
 
     /**
      * @var Registry
      */
     private $registry;
 
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**
@@ -45,6 +44,9 @@ class GeneratorListener
         $this->registry = $registry;
     }
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
@@ -88,6 +90,8 @@ class GeneratorListener
     {
         /** @var GeneratorInterface $generator */
         $generator = $this->getRegistry()->get($annotation->generator);
+
+        /** @noinspection PhpDeprecationInspection */
         $generator->setLength($annotation->length);
 
         if(!empty($annotation->callbacks)){
