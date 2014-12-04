@@ -66,4 +66,12 @@ class StringGenerator implements GeneratorInterface
 
         return $this->prefix . implode($str);
     }
+
+    /**
+     * @param array $options
+     */
+    public function setOptions(array $options)
+    {
+        // TODO: Implement setOptions() method.
+    }
 }

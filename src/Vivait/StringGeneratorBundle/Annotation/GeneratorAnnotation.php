@@ -12,7 +12,16 @@ use Doctrine\Common\Annotations\Annotation;
  */
 class GeneratorAnnotation extends Annotation
 {
+    /**
+     * @var array
+     */
     public $callbacks = [];
+
+    /**
+     * @var array
+     */
+    public $options = [];
+
     /**
      * @var
      */
@@ -28,5 +37,8 @@ class GeneratorAnnotation extends Annotation
      */
     public $unique = true;
 
+    /**
+     * @var bool
+     */
     public $override = true;
 }

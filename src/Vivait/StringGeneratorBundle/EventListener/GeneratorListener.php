@@ -6,7 +6,9 @@ use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vivait\StringGeneratorBundle\Annotation\GeneratorAnnotation;
+use Vivait\StringGeneratorBundle\Model\ConfigurableGeneratorInterface;
 use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
 use Vivait\StringGeneratorBundle\Registry\Registry;
 
@@ -88,13 +90,17 @@ class GeneratorListener
      */
     private function generateString($property, GeneratorAnnotation $annotation, $object)
     {
-        /** @var GeneratorInterface $generator */
+        /** @var GeneratorInterface|ConfigurableGeneratorInterface $generator */
         $generator = $this->getRegistry()->get($annotation->generator);
 
         $generator->setLength($annotation->length);
 
         if(!empty($annotation->callbacks)){
             $this->performCallbacks($generator, $annotation, $object);
+        }
+
+        if($generator instanceof ConfigurableGeneratorInterface){
+            $generator = $this->configureGenerator($generator, $annotation->options);
         }
 
         $str = $generator->generate();
@@ -108,6 +114,22 @@ class GeneratorListener
         } else {
             return $str;
         }
+    }
+
+    /**
+     * @param ConfigurableGeneratorInterface $generator
+     * @param $options
+     * @return \Vivait\StringGeneratorBundle\Model\ConfigurableGeneratorInterface
+     */
+    public function configureGenerator(ConfigurableGeneratorInterface $generator, $options)
+    {
+        $resolver = new OptionsResolver();
+        $generator->getDefaultOptions($resolver);
+
+        $options = $resolver->resolve($options);
+        $generator->setOptions($options);
+
+        return $generator;
     }
 
     /**

@@ -11,8 +11,10 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vivait\StringGeneratorBundle\Annotation\GeneratorAnnotation;
 use Vivait\StringGeneratorBundle\Generator\StringGenerator;
+use Vivait\StringGeneratorBundle\Model\ConfigurableGeneratorInterface;
 use Vivait\StringGeneratorBundle\Registry\Registry;
 
 class GeneratorListenerSpec extends ObjectBehavior
@@ -93,6 +95,24 @@ class GeneratorListenerSpec extends ObjectBehavior
         $registry->get(Argument::any())->willReturn($generator);
         $generator->generate()->shouldBeCalled();
         $generator->setLength(Argument::any())->shouldBeCalled();
+
+        $this->prePersist($args);
+    }
+
+    function it_can_configure_a_generator(Registry $registry, Reader $reader, LifecycleEventArgs $args, ConfigurableGeneratorInterface $generator)
+    {
+        $annotation = new GeneratorAnnotation([]);
+
+        $reader->getPropertyAnnotations(Argument::any())->willReturn([$annotation]);
+
+        $registry->get(Argument::any())->willReturn($generator);
+        $generator->generate()->shouldBeCalled();
+        $generator->setLength(Argument::any())->shouldBeCalled();
+
+        $resolver = new OptionsResolver();
+
+        $generator->getDefaultOptions($resolver)->shouldBeCalled();
+        $generator->setOptions(Argument::any())->shouldBeCalled();
 
         $this->prePersist($args);
     }
