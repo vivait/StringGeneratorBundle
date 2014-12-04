@@ -13,6 +13,11 @@ class Registry
     private $generators;
 
     /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
      * @param ContainerInterface $container
      * @param array $generators
      */
@@ -22,6 +27,11 @@ class Registry
         $this->addAll($generators);
     }
 
+    /**
+     * @param $field
+     * @return GeneratorInterface
+     * @throws \OutOfBoundsException
+     */
     public function get($field)
     {
         if (isset($this->generators[$field])) {
@@ -31,6 +41,11 @@ class Registry
         throw new \OutOfBoundsException(sprintf('Field "%s" not found in registry', $field));
     }
 
+    /**
+     * @param $field
+     * @param $class
+     * @return $this
+     */
     public function add($field, $class)
     {
         $this->generators[$field] = $this->resolveGeneratorType($class);
