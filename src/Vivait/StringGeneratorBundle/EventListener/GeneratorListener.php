@@ -36,7 +36,7 @@ class GeneratorListener
      * via a setter, and the registry is fetched from there instead.
      *
      * @param Reader $reader
-     * @param Registry $registry
+     * @param null|Registry $registry
      */
     public function __construct(Reader $reader, Registry $registry = null)
     {
@@ -91,7 +91,6 @@ class GeneratorListener
         /** @var GeneratorInterface $generator */
         $generator = $this->getRegistry()->get($annotation->generator);
 
-        /** @noinspection PhpDeprecationInspection */
         $generator->setLength($annotation->length);
 
         if(!empty($annotation->callbacks)){
