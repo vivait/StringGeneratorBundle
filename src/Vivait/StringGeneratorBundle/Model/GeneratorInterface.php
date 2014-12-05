@@ -6,7 +6,7 @@ interface GeneratorInterface
 {
     /**
      * @param integer $length
-     * @return $this
+     * @return GeneratorInterface
      * @deprecated this will be deprecated in version 2.0 in favour of using callbacks on the generator. This is due to
      * some generators not actually needing a length - only random string type generators require it.
      */

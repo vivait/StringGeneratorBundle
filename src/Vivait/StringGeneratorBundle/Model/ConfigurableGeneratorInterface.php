@@ -14,7 +14,7 @@ interface ConfigurableGeneratorInterface extends GeneratorInterface
 
     /**
      * @param OptionsResolver $resolver
-     * @return mixed
+     * @return void|OptionsResolver
      */
     public function getDefaultOptions(OptionsResolver $resolver);
 }
