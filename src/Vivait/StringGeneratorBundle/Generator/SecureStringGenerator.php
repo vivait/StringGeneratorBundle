@@ -20,7 +20,7 @@ class SecureStringGenerator implements ConfigurableGeneratorInterface
      */
     private $generator;
 
-    private $chars = '';
+    private $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     private $strength = 'medium';
 

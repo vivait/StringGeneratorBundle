@@ -30,7 +30,7 @@ class SecureStringGeneratorSpec extends ObjectBehavior
 
         $defaults = [
             'length' => 32,
-            'chars' => '',
+            'chars' => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
             'strength' => 'medium',
         ];
 
@@ -59,7 +59,7 @@ class SecureStringGeneratorSpec extends ObjectBehavior
 
     function it_generates_a_random_string(Generator $medium)
     {
-        $medium->generateString(32, '')->shouldBeCalled();
+        $medium->generateString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')->shouldBeCalled();
         $this->generate();
     }
 
