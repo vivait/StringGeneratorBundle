@@ -30,7 +30,7 @@ class SecureStringGeneratorSpec extends ObjectBehavior
 
         $defaults = [
             'length' => 32,
-            'chars' => '',
+            'chars' => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
             'strength' => 'medium',
         ];
 

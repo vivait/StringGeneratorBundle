@@ -16,7 +16,7 @@ class StringGenerator implements ConfigurableGeneratorInterface
     /**
      * @var string
      */
-    private $chars = 'abcdefjhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ12345567890';
+    private $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /**
      * @var string

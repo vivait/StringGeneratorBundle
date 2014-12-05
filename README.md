@@ -40,15 +40,7 @@ vivait_string_generator:
 Generates a random string based on a pool or characters. Defaults:
 
 ```php
-@Generate(generator="string", options={"length"=8, "chars"="abcdefjhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ12345567890", "prefix"=""})
-```
-
-
-### `SecureBytesGenerator`
-Generates a secure random byte string using the `Symfony\Component\Security\Core\Util\SecureRandom` class. Defaults:
-
-```php
-@Generate(generator="secure_bytes", options={"length"=8})
+@Generate(generator="string", options={"length"=8, "chars"="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", "prefix"=""})
 ```
 
 ### `SecureStringGenerator`
@@ -56,7 +48,14 @@ Generates a secure random string using [ircmaxell's RandomLib](https://github.co
 strings(currently `high` is unavailable), `low` and `medium`. Defaults:
 
 ```php
-@Generate(generator="secure_string", options={"length"=32, "chars"="", "strength"="medium"})
+@Generate(generator="secure_string", options={"length"=32, "chars"="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", "strength"="medium"})
+```
+
+### `SecureBytesGenerator`
+Generates a secure random byte string using the `Symfony\Component\Security\Core\Util\SecureRandom` class. Defaults:
+
+```php
+@Generate(generator="secure_bytes", options={"length"=8})
 ```
 
 ## Usage
