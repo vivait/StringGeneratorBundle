@@ -85,7 +85,7 @@ class GeneratorListener
     /**
      * @param $property
      * @param GeneratorAnnotation $annotation
-     * @param $object
+     * @param \ReflectionObject $object
      * @return string
      */
     private function generateString($property, GeneratorAnnotation $annotation, $object)
