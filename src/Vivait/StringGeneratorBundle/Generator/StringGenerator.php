@@ -2,9 +2,10 @@
 
 namespace Vivait\StringGeneratorBundle\Generator;
 
-use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vivait\StringGeneratorBundle\Model\ConfigurableGeneratorInterface;
 
-class StringGenerator implements GeneratorInterface
+class StringGenerator implements ConfigurableGeneratorInterface
 {
 
     /**
@@ -16,10 +17,15 @@ class StringGenerator implements GeneratorInterface
      * @var string
      */
     private $chars = 'abcdefjhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ12345567890';
+
+    /**
+     * @var string
+     */
     private $prefix = '';
 
     /**
      * @param string $chars
+     * @deprecated options should be used instead
      */
     public function setChars($chars)
     {
@@ -37,14 +43,13 @@ class StringGenerator implements GeneratorInterface
      */
     public function setLength($length)
     {
-        if ($length < 1) {
-            throw new \OutOfBoundsException('Length must be greater than 0');
-        }
-
         $this->length = $length;
-        return $this;
     }
 
+    /**
+     * @param $prefix
+     * @deprecated options should be used instead
+     */
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
@@ -65,5 +70,29 @@ class StringGenerator implements GeneratorInterface
         }
 
         return $this->prefix . implode($str);
+    }
+
+    /**
+     * @param array $options
+     * @return mixed|void
+     */
+    public function setOptions(array $options)
+    {
+        $this->chars = $options['chars'];
+        $this->length = $options['length'];
+        $this->prefix = $options['prefix'];
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     * @return mixed
+     */
+    public function getDefaultOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+                'chars' => $this->chars,
+                'length' => $this->length,
+                'prefix' => $this->prefix,
+            ]);
     }
 }
