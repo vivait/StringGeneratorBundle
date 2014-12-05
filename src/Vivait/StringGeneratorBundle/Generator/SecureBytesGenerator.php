@@ -24,11 +24,12 @@ class SecureBytesGenerator implements ConfigurableGeneratorInterface
 
     /**
      * @param integer $length
-     * @return $this
+     * @return ConfigurableGeneratorInterface
      */
     public function setLength($length)
     {
         $this->length = $length;
+        return $this;
     }
 
     /**

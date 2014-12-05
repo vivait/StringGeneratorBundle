@@ -39,20 +39,23 @@ class StringGenerator implements ConfigurableGeneratorInterface
     /**
      * Set the length of the generated string
      * @param $length
-     * @return $this
+     * @return ConfigurableGeneratorInterface
      */
     public function setLength($length)
     {
         $this->length = $length;
+        return $this;
     }
 
     /**
      * @param $prefix
+     * @return ConfigurableGeneratorInterface
      * @deprecated options should be used instead
      */
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
+        return $this;
     }
 
     /**
