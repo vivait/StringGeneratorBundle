@@ -18,3 +18,10 @@ services:
     vivait_generator.generator.secure_bytes:
         class: Vivait\StringGeneratorBundle\Generator\SecureBytesGenerator
         arguments: [@security.secure_random]
+
+    vivait_generator.generator.secure_string:
+        class: Vivait\StringGeneratorBundle\Generator\SecureStringGenerator
+        arguments: [@vivait_generator.randomlib]
+
+    vivait_generator.randomlib:
+        class: RandomLib\Factory
