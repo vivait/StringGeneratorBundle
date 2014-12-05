@@ -6,7 +6,6 @@ use RandomLib\Factory;
 use RandomLib\Generator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vivait\StringGeneratorBundle\Model\ConfigurableGeneratorInterface;
-use Vivait\StringGeneratorBundle\Model\GeneratorInterface;
 
 class SecureStringGenerator implements ConfigurableGeneratorInterface
 {

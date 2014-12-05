@@ -80,4 +80,4 @@ class Registry
 
         throw new \InvalidArgumentException('Invalid Generator');
     }
-} 
+}
