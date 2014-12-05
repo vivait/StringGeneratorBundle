@@ -135,7 +135,7 @@ class GeneratorListener
     /**
      * @param GeneratorInterface $generator
      * @param GeneratorAnnotation $annotation
-     * @param $object
+     * @param \ReflectionObject $object
      */
     public function performCallbacks(GeneratorInterface $generator, GeneratorAnnotation $annotation, $object)
     {
