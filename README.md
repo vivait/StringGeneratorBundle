@@ -31,7 +31,7 @@ vivait_string_generator:
   generators:
     string: vivait_generator.generator.string
     secure_bytes: vivait_generator.generator.secure_bytes
-    secure_string: vivait_generator.generator.secure_bytes
+    secure_string: vivait_generator.generator.secure_string
 ```
 
 ## Bundled generators
