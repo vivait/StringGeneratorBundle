@@ -11,12 +11,6 @@ use SecurityLib\Strength;
 
 class SecureStringGeneratorSpec extends ObjectBehavior
 {
-
-    /**
-     * @var Factory
-     */
-    private $factory;
-
     function it_is_initializable()
     {
         $this->shouldHaveType('Vivait\StringGeneratorBundle\Generator\SecureStringGenerator');
@@ -35,11 +29,6 @@ class SecureStringGeneratorSpec extends ObjectBehavior
         ];
 
         $this->setOptions($defaults);
-    }
-
-    function it_chooses_medium_strength_gen_by_default(Generator $medium)
-    {
-        $this->getGenerator()->shouldReturn($medium);
     }
 
     function it_chooses_a_specified_strength_gen(Generator $medium, Generator $low)

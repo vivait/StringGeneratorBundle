@@ -11,17 +11,18 @@ class SecureStringGenerator implements ConfigurableGeneratorInterface
 {
 
     /**
-     * @var
+     * @var int
      */
     private $length = 32;
 
     /**
-     * @var Generator
+     * @var string
      */
-    private $generator;
-
     private $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+    /**
+     * @var string
+     */
     private $strength = 'medium';
 
     /**
@@ -44,10 +45,10 @@ class SecureStringGenerator implements ConfigurableGeneratorInterface
      */
     public function generate()
     {
-        return $this->generator->generateString($this->length, $this->chars);
+        return $this->getGenerator($this->strength)->generateString($this->length, $this->chars);
     }
 
-    public function getGenerator($strength = 'medium')
+    public function getGenerator($strength)
     {
         switch ($strength) {
             case 'low':
@@ -63,7 +64,7 @@ class SecureStringGenerator implements ConfigurableGeneratorInterface
 
     public function setOptions(array $options)
     {
-        $this->generator = $this->getGenerator($options['strength']);
+        $this->strength = $options['strength'];
         $this->length = $options['length'];
         $this->chars = $options['chars'];
     }
