@@ -11,17 +11,18 @@ class SecureStringGenerator implements ConfigurableGeneratorInterface
 {
 
     /**
-     * @var
+     * @var int
      */
     private $length = 32;
 
     /**
-     * @var Generator
+     * @var string
      */
-    private $generator;
-
     private $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+    /**
+     * @var string
+     */
     private $strength = 'medium';
 
     /**
