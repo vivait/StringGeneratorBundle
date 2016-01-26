@@ -2,26 +2,26 @@ services:
     vivait_generator.generator.listener:
         class: Vivait\StringGeneratorBundle\EventListener\GeneratorListener
         public: false
-        arguments: [@annotation_reader]
+        arguments: ["@annotation_reader"]
         calls:
-            - [setContainer, [@service_container]]
+            - [setContainer, ["@service_container"]]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
     vivait_generator.registry:
         class: Vivait\StringGeneratorBundle\Registry\Registry
-        arguments: [@service_container, []]
+        arguments: ["@service_container", []]
 
     vivait_generator.generator.string:
         class: Vivait\StringGeneratorBundle\Generator\StringGenerator
 
     vivait_generator.generator.secure_bytes:
         class: Vivait\StringGeneratorBundle\Generator\SecureBytesGenerator
-        arguments: [@security.secure_random]
+        arguments: ["@security.secure_random"]
 
     vivait_generator.generator.secure_string:
         class: Vivait\StringGeneratorBundle\Generator\SecureStringGenerator
-        arguments: [@vivait_generator.randomlib]
+        arguments: ["@vivait_generator.randomlib"]
 
     vivait_generator.randomlib:
         class: RandomLib\Factory
