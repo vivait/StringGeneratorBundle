@@ -3,7 +3,6 @@
 namespace Vivait\StringGeneratorBundle\Generator;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Util\SecureRandom;
 use Vivait\StringGeneratorBundle\Model\ConfigurableGeneratorInterface;
 
 class SecureBytesGenerator implements ConfigurableGeneratorInterface
@@ -13,14 +12,6 @@ class SecureBytesGenerator implements ConfigurableGeneratorInterface
      */
     private $secureRandom;
     private $length = 8;
-
-    /**
-     * @param SecureRandom $secureRandom
-     */
-    public function __construct(SecureRandom $secureRandom)
-    {
-        $this->secureRandom = $secureRandom;
-    }
 
     /**
      * @param integer $length
@@ -37,7 +28,7 @@ class SecureBytesGenerator implements ConfigurableGeneratorInterface
      */
     public function generate()
     {
-        return $this->secureRandom->nextBytes($this->length);
+        return random_bytes($this->length);
     }
 
     /**
