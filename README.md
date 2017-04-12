@@ -9,7 +9,9 @@ generates a new string.
 
 ## Install
 
-Add `"vivait/string-generator-bundle": "~1.1"` to your composer.json and run `composer update`.
+Add `"vivait/string-generator-bundle": "~2.0"` to your composer.json and run `composer update`.
+
+If you are using PHP 5.3 or 5.4 you can require the legacy version`"vivait/string-generator-bundle": "~1.1"`
 
 [*Check latest releases*](https://github.com/vivait/StringGeneratorBundle/releases)
 
