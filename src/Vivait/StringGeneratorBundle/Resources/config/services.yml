@@ -22,5 +22,8 @@ services:
         class: Vivait\StringGeneratorBundle\Generator\SecureStringGenerator
         arguments: ["@vivait_generator.randomlib"]
 
+    vivait_generator.generator.uuid_string:
+        class: Vivait\StringGeneratorBundle\Generator\UuidGenerator
+
     vivait_generator.randomlib:
         class: RandomLib\Factory
