@@ -1,6 +1,6 @@
 # StringGeneratorBundle
 
-[![Build Status](https://scrutinizer-ci.com/g/vivait/StringGeneratorBundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/vivait/StringGeneratorBundle/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vivait/StringGeneratorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/vivait/StringGeneratorBundle/?branch=master)
+[![Build Status](https://travis-ci.org/vivait/StringGeneratorBundle.svg?branch=master)](https://travis-ci.org/vivait/StringGeneratorBundle)
 
 This bundle allows you to automatically generate a unique random string on an entity property, useful for
 creating keys. Using Doctrine's `prePersist` callback, StringGenerator adds the generated string to a property
@@ -9,7 +9,9 @@ generates a new string.
 
 ## Install
 
-Add `"vivait/string-generator-bundle": "~1.1"` to your composer.json and run `composer update`.
+Run: `composer require vivait/string-generator-bundle:^2.0` to install the bundle.
+
+If you are using PHP 5.3 or 5.4 you can use the legacy version`vivait/string-generator-bundle:^1.1`
 
 [*Check latest releases*](https://github.com/vivait/StringGeneratorBundle/releases)
 
