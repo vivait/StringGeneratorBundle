@@ -9,6 +9,11 @@ use Vivait\StringGeneratorBundle\Model\ConfigurableGeneratorInterface;
 class UuidGenerator implements ConfigurableGeneratorInterface
 {
     /**
+     * @var Uuid
+     */
+    private $uuid;
+
+    /**
      * @var integer
      */
     private $version;
@@ -17,6 +22,14 @@ class UuidGenerator implements ConfigurableGeneratorInterface
      * @var string
      */
     private $namespace;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+
+    }
 
     /**
      * Creates a random string based on a length and alphabet
@@ -37,6 +50,7 @@ class UuidGenerator implements ConfigurableGeneratorInterface
                 return Uuid::uuid4()->toString();
 
             case 5:
+                $this->checkNamespace($this->version);
                 return Uuid::uuid5(Uuid::NAMESPACE_DNS, $this->namespace)->toString();
 
             default:
@@ -80,5 +94,27 @@ class UuidGenerator implements ConfigurableGeneratorInterface
     public function setLength($length)
     {
         return null;
+    }
+
+    /**
+     * @param $version
+     * @return $this
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * @param $namespace
+     * @return $this
+     */
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+
+        return $this;
     }
 }
