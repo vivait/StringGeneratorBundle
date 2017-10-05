@@ -133,25 +133,26 @@ class GeneratorListener
     }
 
     /**
-     * @param GeneratorInterface $generator
+     * @param GeneratorInterface  $generator
      * @param GeneratorAnnotation $annotation
-     * @param \ReflectionObject $object
+     * @param \ReflectionObject   $object
      */
     public function performCallbacks(GeneratorInterface $generator, GeneratorAnnotation $annotation, $object)
     {
         foreach($annotation->callbacks as $callback => $value){
-            if($this->isMethod($generator, $callback)){
-
-                if($this->isMethod($object, $value)){
+            if($this->isMethod($generator, $callback)) {
+                if($this->isMethod($object, $value)) {
                     $value = $object->$value();
                 }
+
                 $generator->$callback($value);
-            }
-            else{
-                throw new \InvalidArgumentException(sprintf(
-                    'Callback "%s" does not exist in class "%s"',
-                    $callback,
-                    get_class($generator))
+            } else {
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Callback "%s" does not exist in class "%s"',
+                        $callback,
+                        get_class($generator)
+                    )
                 );
             }
         }
