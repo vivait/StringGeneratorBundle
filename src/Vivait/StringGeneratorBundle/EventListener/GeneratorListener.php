@@ -75,7 +75,7 @@ class GeneratorListener
                         break;
                     }
 
-                    $string = $this->generateString($property->name, $annotation, $object);
+                    $string = $this->generateString($property->name, $annotation, $entity);
                     $property->setValue($entity, $string);
                 }
             }
@@ -83,12 +83,13 @@ class GeneratorListener
     }
 
     /**
-     * @param $property
+     * @param string              $property
      * @param GeneratorAnnotation $annotation
-     * @param \ReflectionObject $object
+     * @param object              $entity
+     *
      * @return string
      */
-    private function generateString($property, GeneratorAnnotation $annotation, $object)
+    private function generateString($property, GeneratorAnnotation $annotation, $entity)
     {
         /** @var GeneratorInterface|ConfigurableGeneratorInterface $generator */
         $generator = $this->getRegistry()->get($annotation->generator);
@@ -96,7 +97,7 @@ class GeneratorListener
         $generator->setLength($annotation->length);
 
         if(!empty($annotation->callbacks)){
-            $this->performCallbacks($generator, $annotation, $object);
+            $this->performCallbacks($generator, $annotation, $entity);
         }
 
         if($generator instanceof ConfigurableGeneratorInterface){
@@ -110,7 +111,7 @@ class GeneratorListener
         }
 
         if ($this->repo->findOneBy([$property => $str])) {
-            return $this->generateString($property, $annotation, $object);
+            return $this->generateString($property, $annotation, $entity);
         } else {
             return $str;
         }
@@ -135,7 +136,7 @@ class GeneratorListener
     /**
      * @param GeneratorInterface  $generator
      * @param GeneratorAnnotation $annotation
-     * @param \ReflectionObject   $object
+     * @param object              $object
      */
     public function performCallbacks(GeneratorInterface $generator, GeneratorAnnotation $annotation, $object)
     {
