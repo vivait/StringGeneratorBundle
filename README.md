@@ -24,17 +24,6 @@ public function registerBundles()
         new Vivait\StringGeneratorBundle\VivaitStringGeneratorBundle(),
 }
 ```  
-## Configure
-
-The default configuration is shown below:
-
-```yaml
-vivait_string_generator:
-  generators:
-    string: vivait_generator.generator.string
-    secure_bytes: vivait_generator.generator.secure_bytes
-    secure_string: vivait_generator.generator.secure_string
-```
 
 ## Bundled generators
 
@@ -157,8 +146,14 @@ However, by setting `override` to false, only null properties will have a string
 
 
 ## Custom generators
-You can use your own generators by implementing `GeneratorInterface` and defining the generator in the configuration,
-using either its service or classname.
+You can use your own generators by implementing `GeneratorInterface` and defining the generator in your `services.yml` file with the tag `vivait_generator.generator` and an `alias`, which will be used to identify the Generator in annotations.
+
+```yaml
+vivait_generator.generator.secure_bytes:
+    class: Vivait\StringGeneratorBundle\Generator\SecureBytesGenerator
+    tags:
+        - { name: vivait_generator.generator, alias: 'secure_bytes' }
+```
 
 To create configurable generators, implement `ConfigurableGeneratorInterface`. This interface uses
 [`Symfony\Component\OptionsResolver\OptionsResolver`](http://symfony.com/doc/current/components/options_resolver.html) to set the generator configuration.
@@ -167,30 +162,30 @@ Set default options:
 
 ```php
 /**
-* @param OptionsResolver $resolver
-* @return mixed
-*/
+ * @param OptionsResolver $resolver
+ */
 public function getDefaultOptions(OptionsResolver $resolver)
 {
-  $resolver->setDefaults([
-    'chars' => $this->chars,
-    'length' => $this->length,
-    'prefix' => $this->prefix,
-    ]);
-  }
+  $resolver->setDefaults(
+      [
+        'chars'  => $this->chars,
+        'length' => $this->length,
+        'prefix' => $this->prefix,
+      ]
+  );
+}
   ```
 
 Do something with options:
 
-  ```php
-  /**
-  * @param array $options
-  * @return mixed|void
-  */
-  public function setOptions(array $options)
-  {
-    $this->chars = $options['chars'];
+```php
+/**
+ * @param array $options
+ */
+public function setOptions(array $options)
+{
+    $this->chars  = $options['chars'];
     $this->length = $options['length'];
     $this->prefix = $options['prefix'];
-  }
-  ```
+}
+```
