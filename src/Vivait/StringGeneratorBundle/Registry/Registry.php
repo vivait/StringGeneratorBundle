@@ -10,7 +10,7 @@ class Registry
     /**
      * @var array
      */
-    private $generators = [];
+    private $generators;
 
     public function __construct(array $legacyGenerators = [])
     {
