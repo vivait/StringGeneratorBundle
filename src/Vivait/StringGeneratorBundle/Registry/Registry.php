@@ -12,6 +12,11 @@ class Registry
      */
     private $generators = [];
 
+    public function __construct(array $legacyGenerators = [])
+    {
+        $this->generators = $legacyGenerators;
+    }
+
     /**
      * @param GeneratorInterface $generator
      * @param string             $alias
