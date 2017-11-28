@@ -38,6 +38,10 @@ class UuidGenerator implements ConfigurableGeneratorInterface
      */
     public function generate()
     {
+        if(!class_exists('Ramsey\Uuid\Uuid')) {
+            throw new \RuntimeException('For use the UUID generator you should setup the ramsey/uuid package');
+        }
+
         switch($this->version) {
             case 1:
                 return Uuid::uuid1()->toString();

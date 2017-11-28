@@ -17,8 +17,10 @@
         "symfony/polyfill-php70": "^1.3",
         "symfony/security": "^2.8|^3.0",
         "symfony/options-resolver": "^2.8|^3.0",
-        "ircmaxell/random-lib": "~1.0",
-        "ramsey/uuid": "^3.6"
+        "ircmaxell/random-lib": "~1.0"
+    },
+    "suggest": {
+        "ramsey/uuid": "To use the UUID generator you should require this package"
     },
     "require-dev": {
         "phpspec/phpspec": "~2.0"
