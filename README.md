@@ -34,6 +34,8 @@ vivait_string_generator:
     string: vivait_generator.generator.string
     secure_bytes: vivait_generator.generator.secure_bytes
     secure_string: vivait_generator.generator.secure_string
+    
+    # For use this generator you should require the package ramsey/uuid in your application.
     uuid_string: vivait_generator.generator.uuid_string
 ```
 
@@ -59,6 +61,18 @@ Generates a secure random byte string using the `Symfony\Component\Security\Core
 
 ```php
 @Generate(generator="secure_bytes", options={"length"=8})
+```
+
+### `UuidStringGenerator`
+For generate a UUID v4 (or v1):
+
+```php
+@Generate(generator="uuid_string", options={"version"=4})
+```
+
+You can use also namespaced versions (v3 and v5). For example with the v5:
+```php
+@Generate(generator="uuid_string", options={"version"=5}, namespace="my_namespace")
 ```
 
 ## Usage
