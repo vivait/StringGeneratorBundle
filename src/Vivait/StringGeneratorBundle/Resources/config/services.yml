@@ -10,17 +10,23 @@ services:
 
     vivait_generator.registry:
         class: Vivait\StringGeneratorBundle\Registry\Registry
-        arguments: ["@service_container", []]
 
     vivait_generator.generator.string:
         class: Vivait\StringGeneratorBundle\Generator\StringGenerator
+        tags:
+            - { name: vivait_generator.generator, alias: 'string' }
 
     vivait_generator.generator.secure_bytes:
         class: Vivait\StringGeneratorBundle\Generator\SecureBytesGenerator
+        tags:
+            - { name: vivait_generator.generator, alias: 'secure_bytes' }
 
     vivait_generator.generator.secure_string:
         class: Vivait\StringGeneratorBundle\Generator\SecureStringGenerator
-        arguments: ["@vivait_generator.randomlib"]
+        arguments:
+            - "@vivait_generator.randomlib"
+        tags:
+            - { name: vivait_generator.generator, alias: 'secure_string' }
 
     vivait_generator.generator.uuid_string:
         class: Vivait\StringGeneratorBundle\Generator\UuidGenerator
