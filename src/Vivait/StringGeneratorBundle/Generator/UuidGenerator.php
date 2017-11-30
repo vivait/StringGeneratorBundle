@@ -24,14 +24,6 @@ class UuidGenerator implements ConfigurableGeneratorInterface
     private $namespace;
 
     /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-
-    }
-
-    /**
      * Creates a random string based on a length and alphabet
      *
      * @return string
