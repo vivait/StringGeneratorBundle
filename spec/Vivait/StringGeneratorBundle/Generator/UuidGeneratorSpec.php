@@ -11,11 +11,6 @@ class UuidGeneratorSpec extends ObjectBehavior
         $this->shouldHaveType('Vivait\StringGeneratorBundle\Generator\UuidGenerator');
     }
 
-    function let()
-    {
-
-    }
-
     function it_should_throw_an_exception_when_no_namespace_on_version_3()
     {
         $this->setVersion(3);
