@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\DependencyInjection\Compiler;
+namespace Vivait\StringGeneratorBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
