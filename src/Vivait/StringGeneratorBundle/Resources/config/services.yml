@@ -28,5 +28,10 @@ services:
         tags:
             - { name: vivait_generator.generator, alias: 'secure_string' }
 
+    vivait_generator.generator.uuid_string:
+        class: Vivait\StringGeneratorBundle\Generator\UuidGenerator
+        tags:
+            - { name: vivait_generator.generator, alias: 'uuid_string' }
+
     vivait_generator.randomlib:
         class: RandomLib\Factory

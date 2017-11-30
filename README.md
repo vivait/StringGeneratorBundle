@@ -49,6 +49,20 @@ Generates a secure random byte string using the `Symfony\Component\Security\Core
 @Generate(generator="secure_bytes", options={"length"=8})
 ```
 
+### `UuidStringGenerator`
+***For use this generator you should require the package ```ramsey/uuid``` in your application.***
+
+For generating a UUID:
+
+```php
+@Generate(generator="uuid_string", options={"version"=4})
+```
+
+You can use also namespaced versions (v3 and v5). For example with the v5:
+```php
+@Generate(generator="uuid_string", options={"version"=5}, namespace="my_namespace")
+```
+
 ## Usage
 Add the `@Generate(generator="generator_name")` annotation to an entity property
 (where `generator_name` is the name of a generator defined in the configuration).
