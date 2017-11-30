@@ -52,7 +52,7 @@ Generates a secure random byte string using the `Symfony\Component\Security\Core
 ### `UuidStringGenerator`
 ***For use this generator you should require the package ```ramsey/uuid``` in your application.***
 
-For generate a UUID v4 (or v1):
+For generating a UUID:
 
 ```php
 @Generate(generator="uuid_string", options={"version"=4})
