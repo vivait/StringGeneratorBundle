@@ -9,7 +9,7 @@ generates a new string.
 
 ## Install
 
-Run: `composer require vivait/string-generator-bundle:^2.0` to install the bundle.
+Run: `composer require vivait/string-generator-bundle:^3.0` to install the bundle.
 
 If you are using PHP 5.3 or 5.4 you can use the legacy version`vivait/string-generator-bundle:^1.1`
 
@@ -203,3 +203,20 @@ public function setOptions(array $options)
     $this->prefix = $options['prefix'];
 }
 ```
+
+## Upgrading from version 1 to version 2
+Defining generators in configuration was deprecated in version 2 in favour of service definitions, so they must be removed.
+
+1. For any **CUSTOM** generators you have added, you must now define them as services with a `vivait_generator.generator` tag and an `alias` attribute. You will **not** need to do this for the bundled default generators.
+
+    ```yaml
+    my_generator:
+        class: App\Generator\MyGenerator
+        tags:
+            - { name: vivait_generator.generator, alias: 'my_generator' }
+    ```
+
+1. Remove all `vivait_string_generator` configuration from your project  
+
+## Upgrading from version 2 to version 3
+1. Remove all `vivait_string_generator` configuration from your project if not already gone as it will no longer be recognised.
