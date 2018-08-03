@@ -10,15 +10,7 @@ class Registry
     /**
      * @var array
      */
-    private $generators;
-
-    /**
-     * @param array $legacyGenerators
-     */
-    public function __construct(array $legacyGenerators = [])
-    {
-        $this->generators = $legacyGenerators;
-    }
+    private $generators = [];
 
     /**
      * @param GeneratorInterface $generator
