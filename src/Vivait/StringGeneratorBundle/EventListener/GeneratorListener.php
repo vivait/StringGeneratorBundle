@@ -29,11 +29,6 @@ class GeneratorListener
     private $registry;
 
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * Registry has been made nullable as injecting it causes circular references. Instead, the container is injected
      * via a setter, and the registry is fetched from there instead.
      *
@@ -44,14 +39,6 @@ class GeneratorListener
     {
         $this->reader = $reader;
         $this->registry = $registry;
-    }
-
-    /**
-     * @param ContainerInterface $container
-     */
-    public function setContainer(ContainerInterface $container)
-    {
-        $this->container = $container;
     }
 
     /**
@@ -92,7 +79,7 @@ class GeneratorListener
     private function generateString($property, GeneratorAnnotation $annotation, $entity)
     {
         /** @var GeneratorInterface|ConfigurableGeneratorInterface $generator */
-        $generator = $this->getRegistry()->get($annotation->generator);
+        $generator = $this->registry->get($annotation->generator);
 
         $generator->setLength($annotation->length);
 
@@ -167,16 +154,5 @@ class GeneratorListener
     private function isMethod($class, $callback)
     {
         return method_exists($class, $callback) && is_callable([$class, $callback]);
-    }
-
-    /**
-     * @return Registry
-     */
-    private function getRegistry()
-    {
-        if($this->registry){
-            return $this->registry;
-        }
-        return $this->container->get('vivait_generator.registry');
     }
 }
