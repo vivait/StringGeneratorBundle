@@ -2,9 +2,10 @@ services:
     vivait_generator.generator.listener:
         class: Vivait\StringGeneratorBundle\EventListener\GeneratorListener
         public: false
-        arguments: ["@annotation_reader"]
-        calls:
-            - [setContainer, ["@service_container"]]
+        arguments:
+            - "@annotation_reader"
+            - "@vivait_generator.registry"
+
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
