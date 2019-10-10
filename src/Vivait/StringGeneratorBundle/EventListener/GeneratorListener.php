@@ -72,7 +72,8 @@ class GeneratorListener
             }
         } while (($currentObject = $currentObject->getParentClass()) && (false !== $currentObject));
 
-        foreach ($object->getProperties() as $property) {
+        /** @var \ReflectionProperty[] $property */
+        foreach ($properties as $property) {
             foreach ($this->reader->getPropertyAnnotations($property) as $annotation) {
                 if ($annotation instanceof GeneratorAnnotation) {
 
