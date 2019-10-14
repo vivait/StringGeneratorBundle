@@ -51,9 +51,16 @@ class GeneratorListener
         $meta = $em->getClassMetadata(get_class($entity));
         $this->repo = $em->getRepository($meta->getName());
 
-        $object = new \ReflectionObject($entity);
+        $currentObject = new \ReflectionObject($entity);
+        $properties = [];
+        do {
+            foreach ($currentObject->getProperties() as $property) {
+                $properties[] = $property;
+            }
+        } while (($currentObject = $currentObject->getParentClass()) && (false !== $currentObject));
 
-        foreach ($object->getProperties() as $property) {
+        /** @var \ReflectionProperty[] $property */
+        foreach ($properties as $property) {
             foreach ($this->reader->getPropertyAnnotations($property) as $annotation) {
                 if ($annotation instanceof GeneratorAnnotation) {
 
