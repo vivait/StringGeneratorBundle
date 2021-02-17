@@ -23,7 +23,7 @@
         "ramsey/uuid": "To use the UUID generator you should require this package"
     },
     "require-dev": {
-        "phpspec/phpspec": "^7.0"
+        "phpspec/phpspec": "^2.4"
     },
     "config": {
         "bin-dir": "bin"
